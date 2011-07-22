@@ -29,5 +29,11 @@ class Solution(object):
     def solve_for ( cls, from_n ):
         return sum(cls.multiples_of_three_or_five(from_n))
 
+
+print 'SOLUTION -- Find the sum of all the multiples of 3 or 5 below 1000: %d\n\n' % (
+    Solution.solve_for(1000)
+)
+
+
 if __name__ == '__main__':
     unittest2.main()

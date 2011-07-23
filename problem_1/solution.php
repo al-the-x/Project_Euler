@@ -1,8 +1,9 @@
+#!/usr/bin/env phpunit
 <?php
 
 require_once 'PHPUnit/Autoload.php';
 
-class Test extends PHPUnit_Framework_TestCase
+class SolutionTest extends PHPUnit_Framework_TestCase
 {
     function test_multiples_of_three_or_five ( )
     {
@@ -43,7 +44,6 @@ class Solution
         return array_sum(static::multiples_of_three_or_five($from_n));
     }
 }
-
 
 echo 'SOLUTION -- Find the sum of all the multiples of 3 or 5 below 1000: ',
     Solution::solve_for(1000), "\n\n";

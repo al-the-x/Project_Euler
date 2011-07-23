@@ -1,6 +1,8 @@
-import unittest2
+#!/usr/bin/env python2.7
 
-class Test(unittest2.TestCase):
+import unittest
+
+class Test(unittest.TestCase):
     def test_multiples_of_three_or_five ( self ):
         self.assertEqual([ 3 ],
             Solution.multiples_of_three_or_five(5))
@@ -36,4 +38,4 @@ print 'SOLUTION -- Find the sum of all the multiples of 3 or 5 below 1000: %d\n\
 
 
 if __name__ == '__main__':
-    unittest2.main()
+    unittest.main()

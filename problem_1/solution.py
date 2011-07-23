@@ -2,7 +2,7 @@
 
 import unittest
 
-class Test(unittest.TestCase):
+class SolutionTest(unittest.TestCase):
     def test_multiples_of_three_or_five ( self ):
         self.assertEqual([ 3 ],
             Solution.multiples_of_three_or_five(5))

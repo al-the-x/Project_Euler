@@ -25,9 +25,13 @@ class SolutionTest < Test::Unit::TestCase
     def test_solve_for
         assert_equal 2, Solution.solve_for(4)
 
-        assert_equal 2 + 8 + 34, Solution.solve_for(8)
+        assert_equal 2 + 8, Solution.solve_for(8)
 
-        assert_equal 2 + 8 + 34 + 144 + 610, Solution.solve_for(14)
+        assert_equal 2 + 8, Solution.solve_for(16)
+
+        assert_equal 2 + 8 + 34, Solution.solve_for(64)
+
+        assert_equal 2 + 8 + 34 + 144, Solution.solve_for(256)
     end
 end
 
@@ -48,16 +52,18 @@ class Solution
     def self.solve_for limit
         self.instance :reset => true; sum = 0
 
-        limit.times do
-            n = self.instance.fibonacci
+        n = self.instance.fibonacci
 
+        while n <= limit do
             sum += n if ( n % 2 == 0 )
+
+            n = self.instance.fibonacci
         end
 
         return sum
     end
 end
 
-#print 'SOLUTION -- By considering the terms in the Fibonacci sequence whose ',
-#    'values do not exceed four million, find the sum of the even-valued terms: ',
-#    Solution.solve_for(4000000)
+print 'SOLUTION -- By considering the terms in the Fibonacci sequence whose ',
+    'values do not exceed four million, find the sum of the even-valued terms: ',
+    "%s\n\n" % Solution.solve_for(4000000)

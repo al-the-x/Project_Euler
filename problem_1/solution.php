@@ -1,20 +1,15 @@
 #!/usr/bin/env phpunit
 <?php
 
-require_once 'PHPUnit/Autoload.php';
-
 class SolutionTest extends PHPUnit_Framework_TestCase
 {
-    function test_multiples_of_three_or_five ( )
+    protected $MULTIPLES = array( 3, 5, 6, 9, 10, 12, 15, 18, 20 );
+
+    function test_next_multiple ( )
     {
-        $this->assertEquals(array( 3, ),
-            Solution::multiples_of_three_or_five(5));
+        $solution = new Solution;
 
-        $this->assertEquals(array(3, 5, 6, 9 ),
-            Solution::multiples_of_three_or_five(10));
-
-        $this->assertEquals(array(3, 5, 6, 9, 10, 12, 15, 18 ),
-            Solution::multiples_of_three_or_five(20));
+        foreach ( $this->MULTIPLES as $n ) $this->assertEquals($n, $solution->next());
     }
 
 
@@ -31,19 +26,35 @@ class SolutionTest extends PHPUnit_Framework_TestCase
 
 class Solution
 {
-    static function multiples_of_three_or_five ( $from_n )
+    protected $a = 0, $b = 0;
+
+
+    function next ( )
     {
-        // NOTE: array_filter() preserves array keys, array_values() destroys them.
-        return array_values(array_filter(range(1, $from_n - 1), function($n){
-            return in_array(0, array($n % 3, $n % 5));
-        }));
+        $a = $this->a; $b = $this->b;
+
+        $this->a += ( $a <= $b ? 3 : 0 );
+
+        $this->b += ( $b <= $a ? 5 : 0 );
+
+        return ( $this->a < $this->b ? $this->a : $this->b );
     }
 
-    static function solve_for ( $from_n )
+
+    static function solve_for ( $limit )
     {
-        return array_sum(static::multiples_of_three_or_five($from_n));
+        $i = new static; $n = $i->next(); $sum = 0;
+
+        while ( $n < $limit )
+        {
+            $sum += $n; $n = $i->next();
+        }
+
+        return $sum;
     }
-}
+} // END Solution
+
 
 echo 'SOLUTION -- Find the sum of all the multiples of 3 or 5 below 1000: ',
     Solution::solve_for(1000), "\n\n";
+

@@ -2,16 +2,13 @@
 
 import unittest
 
+MULTIPLES = [ 3, 5, 6, 9, 10, 12, 15, 18, 20 ]
+
 class SolutionTest(unittest.TestCase):
-    def test_multiples_of_three_or_five ( self ):
-        self.assertEqual([ 3 ],
-            Solution.multiples_of_three_or_five(5))
+    def test_next_multiple ( self ):
+        solution = Solution()
 
-        self.assertEqual([ 3, 5, 6, 9 ],
-            Solution.multiples_of_three_or_five(10))
-
-        self.assertEqual([ 3, 5, 6, 9, 10, 12, 15, 18 ],
-            Solution.multiples_of_three_or_five(20))
+        for n in MULTIPLES: self.assertEqual(n, solution.next())
 
 
     def test_solve_for ( self ):
@@ -23,19 +20,35 @@ class SolutionTest(unittest.TestCase):
 
 
 class Solution(object):
-    @classmethod
-    def multiples_of_three_or_five ( cls, from_n ):
-        return [ n for n in range(1, from_n) if 0 in (n % 3, n % 5) ]
+    def __init__ ( self ):
+        self.a = 0; self.b = 0
+
+
+    def next ( self ):
+        a, b = self.a, self.b
+
+        self.a += a <= b and 3
+
+        self.b += b <= a and 5
+
+        return self.a < self.b and self.a or self.b
+
 
     @classmethod
-    def solve_for ( cls, from_n ):
-        return sum(cls.multiples_of_three_or_five(from_n))
+    def solve_for ( cls, limit ):
+        i = cls(); n = i.next(); sum = 0
 
+        while ( n < limit ):
+            sum += n; n = i.next()
 
-print 'SOLUTION -- Find the sum of all the multiples of 3 or 5 below 1000: %d\n\n' % (
-    Solution.solve_for(1000)
-)
+        return sum
 
 
 if __name__ == '__main__':
+    limit = 1000
+
+    print 'SOLUTION -- Find the sum of all the multiples of 3 or 5 below %d: %d\n\n' % (
+        limit, Solution.solve_for(limit)
+    )
+
     unittest.main()

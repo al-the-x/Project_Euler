@@ -5,20 +5,12 @@ require 'test/unit'
 $fibonacci = [ 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610 ]
 
 class SolutionTest < Test::Unit::TestCase
-    def setup
-        @fixture = Solution.new
-    end
+    def test_next_fibonacci
+        solution = Solution.new
 
-
-    def test_fibonacci
         $fibonacci.each do |n|
-            assert_equal n, @fixture.fibonacci
+            assert_equal n, solution.next
         end
-    end
-
-
-    def test_singleton
-        assert_instance_of(Solution, Solution.instance)
     end
 
 
@@ -37,27 +29,20 @@ end
 
 
 class Solution
-    def fibonacci
+    def next
         c = (@a ||= 0); @a = (@b ||= 1); @b = c + @a
     end
 
 
-    def self.instance reset = false
-        @@instance = Solution.new if reset
-
-        @@instance ||= Solution.new
-    end
-
-
     def self.solve_for limit
-        self.instance :reset => true; sum = 0
+        i = self.new; sum = 0
 
-        n = self.instance.fibonacci
+        n = i.next
 
         while n <= limit do
             sum += n if ( n % 2 == 0 )
 
-            n = self.instance.fibonacci
+            n = i.next
         end
 
         return sum
